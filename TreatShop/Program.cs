@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ToDoList.Models;
+using TreatShop.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace ToDoList
+namespace TreatShop
 {
   class Program
   {
