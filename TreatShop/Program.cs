@@ -14,14 +14,14 @@ namespace TreatShop
 
       builder.Services.AddControllersWithViews();
 
-      builder.Services.AddDbContext<ToDoListContext>(
+      builder.Services.AddDbContext<TreatShopContext>(
         DbContextOptions => DbContextOptions.UseMySql(
           builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"])
           )
       );
 
       builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-          .AddEntityFrameworkStores<ToDoListContext>()
+          .AddEntityFrameworkStores<TreatShopContext>()
           .AddDefaultTokenProviders();
 
       builder.Services.Configure<IdentityOptions>(options => 
