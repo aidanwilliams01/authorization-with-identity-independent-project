@@ -3,6 +3,7 @@ using TreatShop.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TreatShop.Controllers
 {
@@ -29,11 +30,13 @@ namespace TreatShop.Controllers
       return View(thisFlavor);
     }
 
+    [Authorize]
     public ActionResult Create()
     {
       return View();
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult Create(Flavor flavor)
     {
@@ -42,6 +45,7 @@ namespace TreatShop.Controllers
       return RedirectToAction("Index");
     }
 
+    [Authorize]
     public ActionResult AddTreat(int id)
     {
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
@@ -49,6 +53,7 @@ namespace TreatShop.Controllers
       return View(thisFlavor);
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult AddTreat(Flavor flavor, int treatId)
     {
@@ -63,12 +68,14 @@ namespace TreatShop.Controllers
       return RedirectToAction("Details", new { id = flavor.FlavorId });
     }
 
+    [Authorize]
     public ActionResult Edit(int id)
     {
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
       return View(thisFlavor);
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult Edit(Flavor flavor)
     {
@@ -77,12 +84,14 @@ namespace TreatShop.Controllers
       return RedirectToAction("Index");
     }
 
+    [Authorize]
     public ActionResult Delete(int id)
     {
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(flavors => flavors.FlavorId == id);
       return View(thisFlavor);
     }
 
+    [Authorize]
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
@@ -92,6 +101,7 @@ namespace TreatShop.Controllers
       return RedirectToAction("Index");
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult DeleteJoin(int joinId)
     {

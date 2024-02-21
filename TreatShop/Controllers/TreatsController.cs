@@ -1,61 +1,37 @@
 using System.Linq;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TreatShop.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
-using System.Security.Claims;
 
 namespace TreatShop.Controllers
 {
-  [Authorize]
   public class TreatsController : Controller
   {
     private readonly TreatShopContext _db;
-    private readonly UserManager<ApplicationUser> _userManager;
 
-    public TreatsController(UserManager<ApplicationUser> userManager, TreatShopContext db)
+    public ActionResult Index()
     {
-      _userManager = userManager;
-      _db = db;
+      return View(_db.Treats.ToList());
     }
 
-    public async Task<ActionResult> Index()
-    {
-      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-      List<Treat> userTreats = _db.Treats
-                          .Where(entry => entry.User.Id == currentUser.Id)
-                          .ToList();
-      return View(userTreats);
-    }
-
+    [Authorize]
     public ActionResult Create()
     {
       return View();
     }
 
+    [Authorize]
     [HttpPost]
-    public async Task<ActionResult> Create(Treat treat, int CategoryId)
+    public ActionResult Create(Treat treat)
     {
-      if (!ModelState.IsValid)
-      {
-        return View(treat);
-      }
-      else
-      {
-        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        ApplicationUser currentUser = await _userManager.FindByIdAsync(userId);
-        treat.User = currentUser;
-        _db.Treats.Add(treat);
-        _db.SaveChanges();
-        return RedirectToAction("Index");
-      }
+      _db.Treats.Add(treat);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
 
+    [Authorize]
     public ActionResult Details(int id)
     {
       Treat thisTreat = _db.Treats
@@ -65,12 +41,14 @@ namespace TreatShop.Controllers
       return View(thisTreat);
     }
 
+    [Authorize]
     public ActionResult Edit(int id)
     {
       Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
       return View(thisTreat);
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult Edit(Treat treat)
     {
@@ -79,12 +57,14 @@ namespace TreatShop.Controllers
       return RedirectToAction("Index");
     }
 
+    [Authorize]
     public ActionResult Delete(int id)
     {
       Treat thisTreat = _db.Treats.FirstOrDefault(treat => treat.TreatId == id);
       return View(thisTreat);
     }
 
+    [Authorize]
     [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
@@ -94,6 +74,7 @@ namespace TreatShop.Controllers
       return RedirectToAction("Index");
     }
 
+    [Authorize]
     public ActionResult AddFlavor(int id)
     {
       Treat thisTreat = _db.Treats.FirstOrDefault(treats => treats.TreatId == id);
@@ -101,6 +82,7 @@ namespace TreatShop.Controllers
       return View(thisTreat);
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult AddFlavor(Treat treat, int flavorId)
     {
@@ -115,6 +97,7 @@ namespace TreatShop.Controllers
       return RedirectToAction("Details", new { id = treat.TreatId });
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult DeleteJoin(int joinId)
     {
