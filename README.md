@@ -1,6 +1,6 @@
-# (Application Name)
+# Pierre's Sweet and Savory Treats
 
-#### (Brief description of application)
+#### An MVC web app for marketing the items at a bakery.
 
 #### By Aidan Williams
 
@@ -8,12 +8,15 @@
 
 * _C#_
 * _.NET_
+* _MySQL_
 
 ## Description
 
+A web app where a bakery owner can display the different treats and flavors they offer.
+
 ## Setup Instructions
 
-1. Clone this repo.
+1. Clone this repo (`git clone [repo URL]`).
 2. Navigate to this project's production directory.
     1. Create a file called "appsettings.json"
     2. Add the following code to the file (username and password credentials are for your local server):
