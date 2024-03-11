@@ -21,6 +21,15 @@ namespace TreatShop.Controllers
       return View(_db.Treats.ToList());
     }
 
+    public ActionResult Details(int id)
+    {
+      Treat thisTreat = _db.Treats
+                          .Include(treat => treat.JoinEntities)
+                          .ThenInclude(join => join.Flavor)
+                          .FirstOrDefault(treat => treat.TreatId == id);
+      return View(thisTreat);
+    }
+
     [Authorize]
     public ActionResult Create()
     {
@@ -34,16 +43,6 @@ namespace TreatShop.Controllers
       _db.Treats.Add(treat);
       _db.SaveChanges();
       return RedirectToAction("Index");
-    }
-
-    [Authorize]
-    public ActionResult Details(int id)
-    {
-      Treat thisTreat = _db.Treats
-                          .Include(treat => treat.JoinEntities)
-                          .ThenInclude(join => join.Flavor)
-                          .FirstOrDefault(treat => treat.TreatId == id);
-      return View(thisTreat);
     }
 
     [Authorize]
